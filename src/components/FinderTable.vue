@@ -157,11 +157,12 @@
       </template>
 
       <template #cell(actions)="row">
-        <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
-          SampleSheet
+        <b-button size="sm" @click="row.toggleDetails" variant="outline-primary">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} SampleSheet
         </b-button>
-        <b-button size="sm" @click="row.toggleDetails">
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} Metadata
+
+        <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
+          Metadata
         </b-button>
       </template>
 

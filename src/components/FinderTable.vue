@@ -97,9 +97,9 @@
             :aria-describedby="ariaDescribedby"
             class="mt-1"
           >
-            <b-form-checkbox value="name">FCID</b-form-checkbox>
-            <b-form-checkbox value="age">SampleSheet</b-form-checkbox>
-            <b-form-checkbox value="isActive">Metadata</b-form-checkbox>
+            <b-form-checkbox value="fcid">FCID</b-form-checkbox>
+            <b-form-checkbox value="files">Files</b-form-checkbox>
+            <b-form-checkbox value="path">Path</b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
       </b-col>
@@ -156,9 +156,13 @@
         {{ row.item.fcid }}
       </template>
 
+      <template #cell(path)="row">
+        <div class="text-left">{{ row.item.path }}</div>
+      </template>
+
       <template #cell(actions)="row">
         <b-button size="sm" @click="row.toggleDetails" variant="outline-primary">
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} SampleSheet
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Files
         </b-button>
 
         <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
@@ -169,7 +173,7 @@
       <template #row-details="row">
         <b-card>
           <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+            <li v-for="(value, key) in row.item.files" :key="key" class="text-left">{{ value.file }}: {{ value.size }}</li>
           </ul>
         </b-card>
       </template>
@@ -226,7 +230,7 @@
         sortDesc: false,
         sortDirection: 'asc',
         filter: null,
-        filterOn: ["name", "age", "isActive"],
+        filterOn: ["fcid", "path", "files"],
         infoModal: {
           id: 'info-modal',
           title: '',

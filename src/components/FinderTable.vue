@@ -153,7 +153,7 @@
       @filtered="onFiltered"
     >
       <template #cell(name)="row">
-        {{ row.value.first }} {{ row.value.last }}
+        {{ row.item.fcid }}
       </template>
 
       <template #cell(actions)="row">
@@ -183,28 +183,38 @@
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
     data() {
       return {
         items: [
-          { isActive: true, age: 40, name: { first: 'Dickerson', last: 'Macdonald' } },
-          { isActive: false, age: 21, name: { first: 'Larsen', last: 'Shaw' } },
-          { isActive: false, age: 29, name: { first: 'Dick', last: 'Dunlap' } }
+          { isActive: true, age: "-", name: { first: 'Wait', last: '...' } },
         ],
         fields: [
           { key: 'name', label: 'FCID', sortable: true, sortDirection: 'desc' },
-          { key: 'age', label: 'File size', sortable: true, class: 'text-center' },
+          { key: 'mdy', label: 'File size', sortable: true, class: 'text-center' },
+          { key: 'path', label: 'Path' },
           {
-            key: 'isActive',
-            label: 'Date',
+            key: 'machine',
+            label: 'Sequencer',
             formatter: (value, key, item) => {
-              return value ? 'Yes' : 'No'
+              switch (value) {
+                case "@A00953": return "IGM";
+                case "@VH00454": return "NextSeq 2K";
+                case "@NB501692": return "NextSeq";
+                case "@K00168": return "HiSeq 4K";
+                case "@7001113": return "HiSeq 2500";
+                case "@A00887": return "Berkeley";
+                case "@A00742": return "Novogene";
+              }
+              return value
             },
             sortable: true,
             sortByFormatted: true,
             filterByFormatted: true
           },
-          { key: 'actions', label: 'Actions' }
+          { key: 'actions', label: 'Actions' },
         ],
         totalRows: 1,
         currentPage: 1,
@@ -233,6 +243,13 @@
       }
     },
     mounted() {
+      // https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
+      axios.get('items.json').then(
+        response => {
+          this.items=response.data;
+          this.totalRows = this.items.length
+        }
+      )
       // Set the initial number of items
       this.totalRows = this.items.length
     },

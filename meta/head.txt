@@ -1,0 +1,23 @@
+==> meta/fastq_metadata.txt <==
+File	#Reads	Sample ID	FCID	Date	Path
+lane7		N/A	1	01-05-2010	/mnt/tscc/fastq/2010/2010_01_05/fastq_files/lane7.fastq.gz
+lane1		N/A	1	01-05-2010	/mnt/tscc/fastq/2010/2010_01_05/fastq_files/lane1.fastq.gz
+lane3		N/A	1	01-05-2010	/mnt/tscc/fastq/2010/2010_01_05/fastq_files/lane3.fastq.gz
+lane5_read1		N/A	1	11-08-2010	/mnt/tscc/fastq/2010/2010_11_08_HiSeq_PE_flowcell-A/fastq_files/lane5_read1.fastq.gz
+lane3_read2		N/A	1	11-08-2010	/mnt/tscc/fastq/2010/2010_11_08_HiSeq_PE_flowcell-A/fastq_files/lane3_read2.fastq.gz
+
+==> meta/samplesheets_metadata.txt <==
+Date	FCID	Read Type	Read Length	Machine	Sample Reference	Sample ID	I7 Index	I7 Sequence	I5 Index	I5 Sequence	Operator	Path
+01-18-2017	N/A	N/A	N/A	N/A	N/A	SI-GA-A4_1	N/A	TATGATTC	N/A	N/A	SI-GA-A	/mnt/tscc/bil022/RenSix/SampleSheets/10x_Genomics_SampleSheet_SP_20170118.csv
+01-18-2017	N/A	N/A	N/A	N/A	N/A	SI-GA-A4_2	N/A	CCCACAGT	N/A	N/A	SI-GA-A	/mnt/tscc/bil022/RenSix/SampleSheets/10x_Genomics_SampleSheet_SP_20170118.csv
+01-18-2017	N/A	N/A	N/A	N/A	N/A	SI-GA-A4_3	N/A	ATGCTGAA	N/A	N/A	SI-GA-A	/mnt/tscc/bil022/RenSix/SampleSheets/10x_Genomics_SampleSheet_SP_20170118.csv
+
+==> meta/txt_metadata.txt <==
+FCID	Date	Machine	Read Type	Path
+HH7GWBBXX	03-28-2017	HiSeq	SR	/mnt/tscc/bil022/RenSix/txt/03-28-2017_HiSeq_DIP_flowcellA_HH7GWBBXX_SR.txt
+HLFLJBCXX	09-13-2018	HiSeq	PE	/mnt/tscc/bil022/RenSix/txt/09-13-2018_HiSeq_ChIP_flowcellA_HLFLJBCXX_PE_Rapid.txt
+H7KE4ADXX	12-06-2013	HiSeq	SR	/mnt/tscc/bil022/RenSix/txt/12-06-2013_HiSeq_ChIP_flowcellA_H7KE4ADXX_SR_Rapid.txt
+C4JWGACXX	05-08-2014	HiSeq	SR	/mnt/tscc/bil022/RenSix/txt/05-08-2014_HiSeq_Fish_flowcellB_C4JWGACXX_SR.txt
+
+
+

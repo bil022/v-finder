@@ -201,10 +201,12 @@
             formatter: (value, key, item) => {
               switch (value) {
                 case "@A00953": return "IGM";
-                case "@VH00454": return "NextSeq 2K";
+                case "@VH00454": return "NextSeq";
                 case "@NB501692": return "NextSeq";
-                case "@K00168": return "HiSeq 4K";
-                case "@7001113": return "HiSeq 2500";
+                case "@K00168": return "HiSeq";
+                case "@7001113": return "HiSeq";
+                case "@HWI-ST216": return "HiSeq";
+                case "@HWI-ST1113": return "HiSeq";
                 case "@A00887": return "Berkeley";
                 case "@A00742": return "Novogene";
               }
@@ -218,8 +220,8 @@
         ],
         totalRows: 1,
         currentPage: 1,
-        perPage: 10,
-        pageOptions: [10, 20, 50, { value: 100, text: "Show a lot" }],
+        perPage: 20,
+        pageOptions: [20, 50, { value: 100, text: "Show a lot" }],
         sortBy: '',
         sortDesc: false,
         sortDirection: 'asc',

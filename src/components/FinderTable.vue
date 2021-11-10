@@ -75,7 +75,7 @@
             ></b-form-input>
 
             <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+              <b-button :disabled="!filter" @click="filter = ''">Search</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
@@ -192,9 +192,8 @@
   export default {
     data() {
       return {
-        items: [
-          { isActive: true, age: "-", name: { first: 'Wait', last: '...' } },
-        ],
+        rawItems: [ ],
+        items: [ ],
         fields: [
           { key: 'name', label: 'FCID', sortable: true, sortDirection: 'desc' },
           { key: 'mdy', label: 'File size', sortable: true, class: 'text-center' },
@@ -249,19 +248,25 @@
       }
     },
     mounted() {
+      // console.log(process.env.NODE_ENV)
+      // development or production
       // https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
-      axios.get('items.json').then(
-        response => {
-          this.items=response.data;
-          this.totalRows = this.items.length
-        }
-      )
-      // Set the initial number of items
-      this.totalRows = this.items.length
+      this.update()
     },
     methods: {
+      update() {
+        axios.get('items.json').then(
+          response => {
+            this.rawItems=response.data;
+            this.items = this.rawItems;
+            this.totalRows = this.items.length
+          }
+        )
+        // Set the initial number of items
+        this.totalRows = this.items.length
+      },
       info(item, index, button) {
-        this.infoModal.title = `Row index: ${index}`
+        this.infoModal.title = `Row: ${index}`
         this.infoModal.content = JSON.stringify(item, null, 2)
         this.$root.$emit('bv::show::modal', this.infoModal.id, button)
       },

@@ -70,7 +70,7 @@ sub byDate {
 print "[\n"; $N=0;
 foreach $k (sort byDate keys %INFO) {
 	print ",\n" if $N++;
-    print("{ $INFO{$k}, \"hasSampleSheet\": \"false\", \"hasDoc\": \"false\",\"files\": [\n".join(",\t\n", @{$LST{$key}})."]}");
+    print("{ $INFO{$k}, \"hasSampleSheet\": \"false\", \"hasDoc\": \"false\",\"files\": [\n".join(",\t\n", @{$LST{$k}})."]}");
 }
 print "\n]";
 

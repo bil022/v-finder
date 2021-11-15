@@ -72,10 +72,11 @@
               v-model="filter"
               type="search"
               placeholder="Type to Search"
+              v-on:keyup.enter="updateItems()"
             ></b-form-input>
 
             <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Search</b-button>
+              <b-button @click="updateItems()">Search</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
@@ -142,8 +143,9 @@
       :fields="fields"
       :current-page="currentPage"
       :per-page="perPage"
-      :filter="filter"
-      :filter-included-fields="filterOn"
+      :filter-remove="filter"
+      :filter-included-fields-remove="filterOn"
+      :filter-function-remove="updateItems"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       :sort-direction="sortDirection"
@@ -172,9 +174,12 @@
 
       <template #row-details="row">
         <b-card>
-          <ul>
-            <li v-for="(value, key) in row.item.files" :key="key" class="text-left">{{ value.file }}: {{ value.size }}</li>
-          </ul>
+          <b-table-simple>
+          <b-tbody>
+          <b-tr><b-th>File</b-th><b-th>Size</b-th></b-tr>
+          <b-tr v-for="(value, key) in row.item.files" :key="key" class="text-left"><b-td>{{ value.file }}</b-td><b-td>{{ value.size }}</b-td></b-tr>
+          </b-tbody>
+          </b-table-simple>
         </b-card>
       </template>
     </b-table>
@@ -192,7 +197,6 @@
   export default {
     data() {
       return {
-        rawItems: [ ],
         items: [ ],
         fields: [
           { key: 'name', label: 'FCID', sortable: true, sortDirection: 'desc' },
@@ -239,6 +243,7 @@
     },
     computed: {
       sortOptions() {
+        console.log("sortOptions")
         // Create an options list from our fields
         return this.fields
           .filter(f => f.sortable)
@@ -251,30 +256,44 @@
       // console.log(process.env.NODE_ENV)
       // development or production
       // https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
-      this.update()
+      this.updateItems()
     },
     methods: {
-      update() {
-        axios.get('items.json').then(
+      updateItems() {
+        var url='items.json';
+        if (process.env.NODE_ENV=='production' && this.filter!=null) {
+          url='items.php';
+        }
+        console.log(url)
+        //console.log(this)
+        axios.get(url, {params: { search: this.filter }}).then(
           response => {
-            this.rawItems=response.data;
-            this.items = this.rawItems;
+            console.log("Searching "+this.filter);
+            console.log(response);
+            this.items = response.data;
             this.totalRows = this.items.length
+
+            for(const item of this.items) {
+              this.$set(item, '_showDetails', this.filter!==null)
+            }
           }
         )
         // Set the initial number of items
         this.totalRows = this.items.length
       },
       info(item, index, button) {
+        console.log("info")
         this.infoModal.title = `Row: ${index}`
         this.infoModal.content = JSON.stringify(item, null, 2)
         this.$root.$emit('bv::show::modal', this.infoModal.id, button)
       },
       resetInfoModal() {
+        console.log("resetInfoModal")
         this.infoModal.title = ''
         this.infoModal.content = ''
       },
       onFiltered(filteredItems) {
+        console.log("onFiltered")
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1

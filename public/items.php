@@ -23,17 +23,22 @@ if ($json_a === null) {
   exit();
 }
 
+function search($hay, $needle) {
+  return preg_match('/'.$needle.'/', $hay);
+  // return stripos($hay, $needle);
+}
+
 $json_b=array();
 // $json_b['search']=$hit;
 foreach ($json_a as $item) {
   $hit=0;
-  if (stripos($item['fcid'], $search)!==false) {
+  if (search($item['fcid'], $search)!==false) {
     $hit++;
-  } else if (stripos($item['path'], $search)!==false) {
+  } else if (search($item['path'], $search)!==false) {
     $hit++;
-  } else if (stripos($item['mdy'], $search)!==false) {
+  } else if (search($item['mdy'], $search)!==false) {
     $hit++;
-  } else if (stripos($item['machine'], $search)!==false) {
+  } else if (search($item['machine'], $search)!==false) {
     $hit++;
   }
   if ($hit>0) {
@@ -43,9 +48,9 @@ foreach ($json_a as $item) {
 
   $files_b=array();
   foreach ($item['files'] as $file) {
-    if (stripos($file['file'], $search)!==false ||
-        stripos($file['size'], $search)!==false ||
-        stripos($file['owner'], $search)!==false ) {
+    if (search($file['file'], $search)!==false ||
+      search($file['size'], $search)!==false ||
+      search($file['owner'], $search)!==false ) {
       $hit++;
       array_push($files_b, $file);
     }

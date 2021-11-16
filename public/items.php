@@ -24,8 +24,12 @@ if ($json_a === null) {
 }
 
 function search($hay, $needle) {
-  return preg_match('/'.$needle.'/', $hay);
-  // return stripos($hay, $needle);
+  if (preg_match('/^\/.*\//', $needle)) {
+    if (preg_match($needle, $hay)>0)
+      return true;
+    return false;
+  }
+  return stripos($hay, $needle);
 }
 
 $json_b=array();

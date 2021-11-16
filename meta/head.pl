@@ -1,5 +1,11 @@
 #!/usr/bin/perl
 
+while (<DATA>) { chomp();
+  ($id, $who)=split(/\t/,$_);
+  $WHOIS{$id}=$who;
+  # print "$id is $who\n"; 
+}
+
 while (<>) {
 	@data=split();
 	die $_ unless (@data==4 || @data==5);
@@ -54,7 +60,11 @@ while (<>) {
         $INFO{$key}=$run_info;
     }
     # push: $file, $size
-    $files="{ \"file\": \"$file\", \"size\": \"$size\" }";
+    $who=""; $uid="N/A"; $who="";
+    $uid=$1 if $file=~/([a-zA-Z]+)/;
+    $who=$WHOIS{$uid} if exists $WHOIS{$uid};
+ 
+    $files="{ \"file\": \"$file\", \"size\": \"$size\", \"owner\": \"$who\" }";
     push(@{$LST{$key}}, $files);
 }
 
@@ -75,18 +85,20 @@ foreach $k (sort byDate keys %INFO) {
 print "\n]";
 
 __END__
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ786_S2_L001_R2_001.fastq.gz 301252040 1615508935.8529025490 @VH00454:1:AAACYFJHV:1:1101:50157:1000 2:N:0:CGATGT
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ790_S6_L002_R2_001.fastq.gz 90546218 1615508999.2204648920 @VH00454:1:AAACYFJHV:2:1101:31751:1000 2:N:0:CAGATC
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/YX004_S26_L001_R1_001.fastq.gz 1246373248 1615510332.4832962510 @VH00454:1:AAACYFJHV:1:1101:32774:1000 1:N:0:CTTGTA
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ795_S13_L001_R2_001.fastq.gz 419840225 1615509329.4033888980 @VH00454:1:AAACYFJHV:1:1101:43946:1000 2:N:0:CATGGC
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ775_S8_L002_R1_001.fastq.gz 1313636346 1615508817.3138495280 @VH00454:1:AAACYFJHV:2:1101:32206:1000 1:N:0:CAACTA
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ796_S14_L002_R1_001.fastq.gz 402711315 1615509358.1306454150 @VH00454:1:AAACYFJHV:2:1101:33607:1000 1:N:0:CATTTT
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ790_S6_L002_R1_001.fastq.gz 71941829 1615508997.9764538560 @VH00454:1:AAACYFJHV:2:1101:31751:1000 1:N:0:CAGATC
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/YX004_S26_L001_R2_001.fastq.gz 1292965724 1615510352.3614718190 @VH00454:1:AAACYFJHV:1:1101:32774:1000 2:N:0:CTTGTA
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ786_S2_L001_R1_001.fastq.gz 296580423 1615508931.7028657060 @VH00454:1:AAACYFJHV:1:1101:50157:1000 1:N:0:CGATGT
-/projects/ps-renlab/fastq/2021/2021_03_09_NS/fastq/CZ796_S14_L002_R2_001.fastq.gz 384399817 1615509363.0916897050 @VH00454:1:AAACYFJHV:2:1101:33607:1000 2:N:0:CATTTT
-/projects/ps-renlab/fastq/2009/2009_03_20/fastq_files/lane7.fastq.gz 243543391 1519255066.3580226560 @SOLEXA2_0020:7:1:0:116#0/1
-/projects/ps-renlab/fastq/2009/2009_03_20/fastq_files/lane6.fastq.gz 286865366 1519255066.3610226780 @SOLEXA2_0020:6:1:0:95#0/1
-/projects/ps-renlab/fastq/2009/2009_03_20/fastq_files/lane1.fastq.gz 421338942 1519255066.3640227000 @SOLEXA2_0020:1:1:0:17#0/1
-/projects/ps-renlab/fastq/2009/2009_03_20/fastq_files/lane2.fastq.gz 426483670 1519255066.3670227220 @SOLEXA2_0020:2:1:0:68#0/1
-/projects/ps-renlab/fastq/2009/2009_03_20/fastq_files/lane5.fastq.gz 354212001 1519255066.3700227440 @SOLEXA2_0020:5:1:0:59#0/1
+RH	Rong Hu
+JY	Jian Yan
+SRC	Sora Chee
+AY	Ah Young Lee
+ADS	Anthony Schmitt
+MY	Miao Yu
+SP	Sebastian Preissl
+CZ	Chenxu Zhu
+JL	Jason Li
+DG	David Gorkin
+NK	Naoki Kubo
+HH	Hui Huang
+RZY	Zhen Ye
+YD	Yarui Diao
+GH	Gary Hon
+YX	Yang Xie
+BC	Benson Chen

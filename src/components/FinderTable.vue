@@ -176,8 +176,12 @@
         <b-card>
           <b-table-simple>
           <b-tbody>
-          <b-tr><b-th>File</b-th><b-th>Size</b-th></b-tr>
-          <b-tr v-for="(value, key) in row.item.files" :key="key" class="text-left"><b-td>{{ value.file }}</b-td><b-td>{{ value.size }}</b-td></b-tr>
+          <b-tr><b-th>File</b-th><b-th>Owner</b-th><b-th>Size</b-th></b-tr>
+          <b-tr v-for="(value, key) in row.item.files" :key="key" class="text-left">
+            <b-td>{{ value.file }}</b-td>
+            <b-td>{{ value.owner }}</b-td>
+            <b-td>{{ value.size }}</b-td>
+          </b-tr>
           </b-tbody>
           </b-table-simple>
         </b-card>

@@ -43,7 +43,9 @@ foreach ($json_a as $item) {
 
   $files_b=array();
   foreach ($item['files'] as $file) {
-    if (stripos($file['file'], $search)!==false || stripos($file['size'], $search)!==false) {
+    if (stripos($file['file'], $search)!==false ||
+        stripos($file['size'], $search)!==false ||
+        stripos($file['owner'], $search)!==false ) {
       $hit++;
       array_push($files_b, $file);
     }

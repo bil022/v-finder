@@ -273,7 +273,7 @@
     methods: {
       updateItems() {
         var url='http://localhost/bli/v-finder/items.php';
-        if (process.env.NODE_ENV=='production' && this.filter!=null) {
+        if (process.env.NODE_ENV=='production') {
           url='items.php';
         }
         console.log(url)

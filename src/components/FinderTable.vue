@@ -2,6 +2,7 @@
   <b-container fluid>
     <!-- User Interface controls -->
     <b-row>
+      <!--
       <b-col lg="6" class="my-1">
         <b-form-group
           label="Sort"
@@ -56,10 +57,10 @@
           ></b-form-select>
         </b-form-group>
       </b-col>
-
-      <b-col lg="6" class="my-1">
+      -->
+      <b-col lg="10" class="my-1">
         <b-form-group
-          label="Filter"
+          label="Search"
           label-for="filter-input"
           label-cols-sm="3"
           label-align-sm="right"
@@ -80,8 +81,17 @@
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
+        <b-form-group
+          description="YX126: For YX126, /YX12[0-9]/: For YX120-129, /naoki|yang/i: For Naoki or Yang, case insensitive"
+          label-cols-sm="3"
+          label-align-sm="left"
+          label-size="sm"
+          class="mb-0"
+        >
+        </b-form-group>
       </b-col>
 
+      <!--
       <b-col lg="6" class="my-1">
         <b-form-group
           v-model="sortDirection"
@@ -135,6 +145,7 @@
           class="my-0"
         ></b-pagination>
       </b-col>
+      -->
     </b-row>
 
     <!-- Main table element -->
@@ -143,9 +154,6 @@
       :fields="fields"
       :current-page="currentPage"
       :per-page="perPage"
-      :filter-remove="filter"
-      :filter-included-fields-remove="filterOn"
-      :filter-function-remove="updateItems"
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       :sort-direction="sortDirection"
@@ -180,7 +188,7 @@
           <b-tr v-for="(value, key) in row.item.files" :key="key" class="text-left">
             <b-td>{{ value.file }}</b-td>
             <b-td>{{ value.owner }}</b-td>
-            <b-td>{{ value.size }}</b-td>
+            <b-td class="text-right">{{ numFormat(value.size) }}</b-td>
           </b-tr>
           </b-tbody>
           </b-table-simple>
@@ -204,7 +212,7 @@
         items: [ ],
         fields: [
           { key: 'name', label: 'FCID', sortable: true, sortDirection: 'desc' },
-          { key: 'mdy', label: 'File size', sortable: true, class: 'text-center' },
+          { key: 'mdy', label: 'Date', sortable: true, class: 'text-center' },
           { key: 'path', label: 'Path' },
           {
             key: 'machine',
@@ -264,7 +272,7 @@
     },
     methods: {
       updateItems() {
-        var url='items.json';
+        var url='http://localhost/bli/v-finder/items.php';
         if (process.env.NODE_ENV=='production' && this.filter!=null) {
           url='items.php';
         }
@@ -287,7 +295,7 @@
       },
       info(item, index, button) {
         console.log("info")
-        this.infoModal.title = `Row: ${index}`
+        this.infoModal.title = `Row: ${index+1}`
         this.infoModal.content = JSON.stringify(item, null, 2)
         this.$root.$emit('bv::show::modal', this.infoModal.id, button)
       },
@@ -295,6 +303,13 @@
         console.log("resetInfoModal")
         this.infoModal.title = ''
         this.infoModal.content = ''
+      },
+      numFormat(amount) {
+        if (amount !== '' || amount !== undefined || amount !== 0  || amount !== '0' || amount !== null) {
+          return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        } else {
+          return amount;
+        }
       },
       onFiltered(filteredItems) {
         console.log("onFiltered")

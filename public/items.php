@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
 
 $string = file_get_contents("items.json");
 if ($string === false) {

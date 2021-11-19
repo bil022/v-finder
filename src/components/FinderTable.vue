@@ -114,8 +114,8 @@
           </b-form-checkbox-group>
         </b-form-group>
       </b-col>
-
-      <b-col sm="5" md="6" class="my-1">
+      -->
+      <b-col sm="3" md="6" class="my-1">
         <b-form-group
           label="Per page"
           label-for="per-page-select"
@@ -135,7 +135,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col sm="7" md="6" class="my-1">
+      <b-col sm="9" md="6" class="my-1">
         <b-pagination
           v-model="currentPage"
           :total-rows="totalRows"
@@ -145,7 +145,7 @@
           class="my-0"
         ></b-pagination>
       </b-col>
-      -->
+
     </b-row>
 
     <!-- Main table element -->
@@ -162,7 +162,7 @@
       small
       @filtered="onFiltered"
     >
-      <template #cell(name)="row">
+      <template #cell(fcid)="row">
         {{ row.item.fcid }}
       </template>
 
@@ -196,6 +196,39 @@
       </template>
     </b-table>
 
+    <b-row>
+      <b-col sm="3" md="6" class="my-1">
+        <b-form-group
+          label="Per page"
+          label-for="per-page-select"
+          label-cols-sm="6"
+          label-cols-md="4"
+          label-cols-lg="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-form-select
+            id="per-page-select"
+            v-model="perPage"
+            :options="pageOptions"
+            size="sm"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="9" md="6" class="my-1">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          align="fill"
+          size="sm"
+          class="my-0"
+        ></b-pagination>
+      </b-col>
+    <b-row>
+
     <!-- Info modal -->
     <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
       <pre>{{ infoModal.content }}</pre>
@@ -211,7 +244,8 @@
       return {
         items: [ ],
         fields: [
-          { key: 'name', label: 'FCID', sortable: true, sortDirection: 'desc' },
+          // fcid mdy path machine length drive hasSampleSheet hasDoc files
+          { key: 'fcid', label: 'FCID', sortable: true, sortDirection: 'desc' },
           { key: 'mdy', label: 'Date', sortable: true, class: 'text-center' },
           { key: 'path', label: 'Path' },
           {
@@ -235,6 +269,8 @@
             sortByFormatted: true,
             filterByFormatted: true
           },
+          { key: 'length', label: 'Length' },
+          { key: 'drive', label: 'Drive' }, 
           { key: 'actions', label: 'Actions' },
         ],
         totalRows: 1,

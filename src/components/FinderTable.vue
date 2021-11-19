@@ -227,7 +227,7 @@
           class="my-0"
         ></b-pagination>
       </b-col>
-    <b-row>
+    </b-row>
 
     <!-- Info modal -->
     <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">

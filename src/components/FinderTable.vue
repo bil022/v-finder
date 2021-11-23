@@ -81,7 +81,7 @@
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
-        <b-link href="#" @click="filter='YX126';updateItems()">YX126</b-link> |
+        Try: <b-link href="#" @click="filter='YX126';updateItems()">YX126</b-link> |
         <b-link href="#" @click="filter='/YX12[0-9]/';updateItems()">YX12[0-9]</b-link> |
         <b-link href="#" @click="filter='/naoki|yang/i';updateItems()">/naoki|yang/i</b-link>
         <b-form-group
